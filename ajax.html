@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quoth the Giphy</title>
+</head>
+<body>
+  <div id="buttons">
+    <button data-person="Arnold Schwarzenegger">
+      I'll be back
+    </button>
+    <button data-person="Sylvester Stallone">
+     When your pushed, killing is just as easy as breathing!!!
+    </button>
+    <!-- STEP ONE: Open this file in the browser and click on the buttons. Watch what happens --> 
+    <!--Done.-->
+
+    <!-- STEP TWO: between the dashed lines below
+            * add three more buttons
+            * add a data-person attribute of famous people you know
+            * with a quote said by them -->
+
+    <button data-person="Wesley Snipes">
+      Cancel that bitch I'll buy me another one.
+    </button>
+
+    <button data-person="Kobe Bryant">
+      Take what the defense gives you.
+    </button>
+
+    <button data-person="Hannibal Smith">
+      I just love when a plan comes together!!!    
+    </button>
+
+    <button data-person="Tony Montana">
+      A million here a million there...    
+    </button>
+
+    <button data-person="N. Charlie">
+      It's nice to be nice, but not too dam nice!  
+    </button>
+
+    <button data-person="Tupac Shakur">
+      You ain't never had a friend like me...
+    </button>
+
+    <button data-person="George Bush">
+      Now that offer is still on the table...
+    </button>
+
+    <button data-person="Goldie">
+      Selling cocaine, as usual...
+    </button>
+
+    <button data-person="Big C">
+      Don't lose the advanage J...
+    </button>
+
+    <!-- **************************************** -->
+    <!-- YOUR BUTTONS GO HERE!!!!!! Obviously delete this text after you put them between the dashed lines here.  -->
+    <!-- **************************************** -->
+    <!-- STEP THREE: open this file in the browser and click on your buttons. If they don't work, then fix your buttons -->
+    <!-- STEP FOUR: go over the JavaScript with your partners, and explain the lines of code to each other. -->
+  </div>
+  <div id="gifs-appear-here">
+  </div>
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+    $("button").on("click", function() {
+      var person = $(this).attr("data-person");
+      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+      $.ajax({
+          url: queryURL,
+          method: "GET"
+        })
+        .done(function(response) {
+          var results = response.data;
+          for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div class='item'>");
+            var rating = results[i].rating;
+            var p = $("<p>").text("Rating: " + rating);
+            var personImage = $("<img>");
+            personImage.attr("src", results[i].images.fixed_height.url);
+            gifDiv.prepend(p);
+            gifDiv.prepend(personImage);
+            $("#gifs-appear-here").prepend(gifDiv);
+          }
+        });
+    });
+  </script>
+</body>
+</html>
